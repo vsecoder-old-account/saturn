@@ -1,0 +1,66 @@
+{
+  "name": "saturn",
+  "productName": "Saturn",
+  "version": "1.0.1",
+  "description": "New mini and speedy browser",
+  "author": "vsevolod",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "make": "electron-forge make"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ajax-request": "^1.2.3",
+    "dropbox-fs": "^0.3.1",
+    "electron-updater": "^4.0.6",
+    "ngrok": "^3.2.7",
+    "mousetrap": "^1.6.2",
+    "electron-compile": "^6.4.4"
+  },
+  "devDependencies": {
+    "electron-forge": "^5.2.4",
+    "electron-prebuilt-compile": "8.2.0",
+    "electron-builder": "^20.38.4"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "npm",
+        "icon": "src/assets/icons/icon.ico"
+      },
+      "electronWinstallerConfig": {
+        "name": "saturn"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "htmlcssphpjs",
+        "name": "saturn"
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "saturn"
+      }
+    }
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "htmlcssphpjs",
+      "repo": "saturn"
+    }
+  ]
+}
