@@ -22,7 +22,7 @@ Saturn uses a number of API's and libraries to work properly:
 * ✅ [NodeJs]
 
 ### Installation 🌟
-> Installers are available on website [here](https://||||||||||||||||||||||||).
+> Installers are available [here](https://github.com/htmlcssphpjs/saturn/releases/tag/v1.0.1).
 > Electron requires [Node.js](https://nodejs.org/) to run.
 
 
