@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/Chhekur/local-browser/master/assets/icons/icon.png" width="15%">
+<img src="https://raw.githubusercontent.com/htmlcssphpjs/saturn/main/src/assets/icons/icon.png" width="15%">
 
 # Saturn
 
