@@ -4,7 +4,7 @@
 
 # What is Saturn ?
 Saturn is a browser built on Electron.
-Saturn is peer to peer browser, which provide you facility to share you localhost with other Saturn user's in just one click.
+Saturn is new mini and speedy browser
 
     
 
