@@ -1,0 +1,184 @@
+<link rel="shortcut icon" type="image/png" href="../assets/icons/icon.ico"/>
+<title>saturn://settings</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+.settings-page {
+	margin:0px;
+	/*color:#abb2bf;*/
+	font-family:system-ui;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	/*background-color:#282c34;*/
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  color: #777;
+  border-radius: 2px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  font-size: 12px;
+  font-weight: 500;
+  height: 25px;
+  line-height: 2;
+  padding: 0 8px;
+  letter-spacing: .2px;
+  height: 26px;
+  font-weight: 400;
+}
+.btn * {
+  cursor: pointer;
+  line-height: 25px;
+  vertical-align: baseline;
+  display: inline-block;
+}
+.btn:focus {
+  outline-color: #007aff;
+}
+.btn:hover {
+  text-decoration: none;
+  background: #f0f0f0;
+}
+.btn.disabled,
+.btn:disabled {
+  cursor: default;
+  color: #999999;
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+.btn.disabled .spinner,
+.btn:disabled .spinner {
+  color: #aaa;
+}
+.btn.primary {
+  -webkit-font-smoothing: antialiased;
+  font-weight: 800;
+  background: #007aff;
+  color: #fff;
+  border: none;
+  transition: background .1s ease;
+}
+.btn.primary:hover {
+  background: #0074f2;
+}
+a.btn span {
+  vertical-align: baseline;
+}
+.btn.big {
+  font-size: 18px;
+  height: auto;
+  padding: 0px 12px;
+}
+a.link {
+  color: blue;
+  text-decoration: underline;
+}
+.right {
+  float: right;
+}
+.icon-wrapper {
+  vertical-align: top;
+  width: 70px;
+  font-size: 50px;
+  display: inline-block;
+  color: #555;
+
+  i {
+    margin-top: -3px;
+  }
+}
+.error-wrapper {
+  display: inline-block;
+  width: 80%;
+}
+div.error-page-content {
+  max-width: 650px;
+  margin: auto;
+  transform: translateX(-20px);
+  margin-top: 30vh;
+  color: #777;
+  font-size: 14px;
+}
+div.error-page-content .description {
+
+  p {
+    margin: 20px 0;
+  }
+}
+div.error-page-content i {
+  margin-right: 5px;
+}
+p.big {
+  font-size: 18px;
+}
+.icon {
+  float: right;
+}
+li {
+  margin-bottom: 0.5em;
+}
+li:last-child {
+  margin: 0;
+}
+.footer {
+  font-size: 14px;
+  color: #777;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+</style>
+<div class="settings-page">
+	<center>
+		<img src="../assets/icons/icon.png" width=100px>
+		<h1>
+			Saturn settings
+		</h1>
+		<h4>Theme:
+		<select onchange="getTheme(this.value)" id="th">
+		  <option value="white">White</option>
+		  <option value="black">Black</option>
+		  <option disabled title="in development">Mono</option>
+		</select></h4> 
+		<h4>History:
+		<select>
+		  <option value="no">Not save</option>
+		  <option value="yes">Save</option>
+		</select></h4>
+		<h4>Start page:
+		<select onchange="getPage(this.value)" id="pg">
+		  <option value="google">Google</option>
+		  <option value="yandex">Yandex</option>
+		  <option value="ya">Ya.ru</option>
+		  <option value="duck">DuckDuckGo</option>
+		</select></h4>
+		<!-- <link rel="stylesheet" href="../assets/css/black.css"> -->
+	</center>
+	<script>
+		let theme = localStorage.getItem('theme');
+		let page = localStorage.getItem('page');
+		let btn = document.querySelector('.btn');
+
+		function getTheme (num) {
+			localStorage.setItem('theme', num);
+			console.log(num)
+		}
+		function getPage (num) {
+			localStorage.setItem('page', num);
+			console.log(num)
+		}
+	</script>
+</div>

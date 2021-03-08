@@ -16683,7 +16683,6 @@ a:hover {
   text-decoration: underline;
 }
 a:not([href]):not([tabindex]) {
-  color: inherit;
   text-decoration: none;
 }
 a:not([href]):not([tabindex]):focus,

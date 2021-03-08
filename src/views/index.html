@@ -14,7 +14,6 @@
 		</script>
 		<script src="../assets/js/metro.js"></script>
 		<script src="../assets/js/bootstrap.bundle.min.js"></script>
-		<!-- <script src="../assets/js/tab.js"></script> -->
 	</head>
 	<body>
 		<!-- <ul class="nav nav-tabs drag" id="tabs"> -->
@@ -23,7 +22,7 @@
 			<div class="window">
 			    <div class="window-caption drag">
 			    	<ul class = "nav nav-tabs" id = "tabs">
-			    		<li id="new-tab-button" style="margin-top:5px;width: 40px;"><button class="button" onclick="newTab('https:/\/google.com')"><span class = "mif-plus fg-black" style="font-size:10px;"></span></button></li>
+			    		<li id="new-tab-button" style="margin-top:5px;width: 40px;"><button class="button" onclick="newT()"><span class = "mif-plus fg-black" style="font-size:10px;"></span></button></li>
 			    	</ul>
 			        <!-- <li id = "tab1asd"><a href=""  role="tab" data-toggle="tab" data-target = "#tab1"><span onclick = "opentab(this)"> filename</span><span onclick = "closeAnyFile(this)" class="close black"></span></a></li>
 					<li id = "tab2asdd"><a href=""  role="tab" data-toggle="tab" data-target = "#tab2"><span onclick = "opentab(this)"> filename</span><span onclick = "closeAnyFile(this)" class="close black"></span></a></li>
@@ -63,6 +62,8 @@
 			<a class="dropdown-item" onclick="openGame()">Game</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" onclick="openAbout()">About</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" onclick="openSettings()">Settings</a>
 			<!-- <a class="dropdown-item" href="#">Exit</a> -->
 		</div>
 
@@ -73,6 +74,46 @@
 				<span class = "domain-error"></span>
 			</center>
 		</div>
+		<menu class="menu">
+			<li class="menu-item" onclick="backCurrentTab()">
+				<button type="button" class="menu-btn">
+					<i class="fa fa-arrow-left"></i>
+					<span class="menu-text">Назад</span>
+				</button>
+			</li>
+			<li class="menu-item" onclick="forwardCurrentTab()">
+				<button type="button" class="menu-btn">
+					<i class="fa fa-arrow-right"></i>
+					<span class="menu-text">Вперёд</span>
+				</button>
+			</li>
+				<li class="menu-separator"></li>
+				<li class="menu-item" onclick="reloadCurrentTab()">
+				<button type="button" class="menu-btn">
+					<i class="fa fa-reply"></i>
+					<span class="menu-text">Обновить</span>
+				</button>
+			</li>
+			<!--<li class="menu-separator"></li>
+			<li class="menu-item">
+				<button type="button" class="menu-btn">
+					<i class="fa fa-download"></i>
+					<span class="menu-text">Сохранить</span>
+				</button>
+			</li>
+			<li class="menu-item">
+				<button type="button" class="menu-btn">
+					<i class="fa fa-edit"></i>
+					<span class="menu-text">Изменить</span>
+				</button>
+			</li>
+			<li class="menu-item">
+				<button type="button" class="menu-btn">
+					<i class="fa fa-trash"></i>
+					<span class="menu-text">Удалить</span>
+				</button>
+			</li>-->
+		</menu>
 	</body>
 	<script src="../assets/js/index.js"></script>
 	<script src="../assets/js/key_binding.js"></script>

@@ -1,10 +1,6 @@
 const ipc = require('electron').ipcRenderer;
 const path = require('path');
 const url_module = require('url');
-const dfs = require('dropbox-fs')({
-    apiKey: 'JNGlu45zHTAAAAAAAAAACtJtnrBpBH85NBIT7Ow0oI82RGptj28bATaQSAd5TRbr'
-});
-var ngrok = require('ngrok');
 var app = require('http').createServer();
 // error_page = require('./error_page.js');
 
@@ -42,8 +38,9 @@ function newTab(url){
 							<button class="button url-bar-button" onclick = "reloadCurrentTab()"><i class="fas fa-redo-alt"></i></button>\
 							</div>\
 							<div class="url-bar-container">\
-								<input contenteditable id = "url_bar' + newTabCount + '" class = "url-bar" placeholder="Введите url">\
+								<input contenteditable id = "url_bar' + newTabCount + '" class = "url-bar" placeholder="Введите url или строку для поиска">\
 							</div>\
+							<img src="../assets/img/abp-128.png" style="width: 20px">\
 							<div class = "inline url-bar-menu-button">\
 								<button class = "button url-bar-button menu-button" data-container="body" data-toggle="popover" data-placement="bottom" data-html = "true" id = "menu"><span class="mif-menu mif-2x"></span></button>\
 							</div>\
@@ -90,8 +87,75 @@ function increaseTabSize(){
 	$('.tab-title-bar').css('width', `calc(${width} - 80px)`);
 }
 
-newTab('https://google.com');
+let theme = localStorage.getItem('theme');
+let page = localStorage.getItem('page');
+
+let nn = 0;
+
+if (theme == null) {
+	localStorage.setItem('theme', 'white');
+} else if (theme == 'black') {
+	let link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.href = "../assets/css/black.css";
+	link.id = 'blacktheme';
+	document.head.append(link);
+	nn = 1;
+} else {
+	///
+}
+
+let u = '';
+if (page == null) {
+	localStorage.setItem('page', 'google');
+	u = 'https://google.com';
+	newTab('https://google.com');
+} else {
+	let pag = localStorage.getItem('page');
+	if (pag == 'yandex') {
+		u = 'https://yandex.ru';
+		newTab('https://yandex.ru');
+	} else if (pag == 'ya') {
+		u = 'https://ya.ru';
+		newTab('https://ya.ru');
+	} else if (pag == 'duck') {
+		u = 'https://duckduckgo.com';
+		newTab('https://duckduckgo.com');
+	} else {
+		u = 'https://google.com';
+		newTab('https://google.com');
+	}
+}
+
+function checkTheme() {
+	if (localStorage.getItem('theme') == null) {
+		localStorage.setItem('theme', 'white');
+		if (nn == 1) {
+			document.querySelector('#blacktheme').remove();
+		}
+		nn = 0;
+	} else if (localStorage.getItem('theme') == 'black' && nn == 0) {
+		let link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.href = "../assets/css/black.css";
+		link.id = 'blacktheme';
+		document.head.append(link);
+		nn = 1;
+	} else if (localStorage.getItem('theme') == 'white' && nn == 1) {
+		if (nn == 1) {
+			document.querySelector('#blacktheme').remove();
+		}
+		nn = 0;
+	}
+	setTimeout(checkTheme, 3000);
+}
+checkTheme();
+
 $('#tab_click1').click();
+
+function newT() {
+	newTab(u);
+}
 
 function findNextTab(deleted_tab_count){
     for(let i = deleted_tab_count + 1; i <= newTabCount; i++){
@@ -132,17 +196,23 @@ function openURL(url){
   currentTab.url = url;
 
 	let temp = url_module.parse(url);
-	// console.log(temp.protocol);
-	if (temp.protocol == null || temp.protocol == "localhost:") url = 'http://' + url;
-	if (temp.protocol == "saturn:") {
+	console.log(temp.protocol);
+	if (temp.protocol == null || temp.protocol == "localhost:") {
+		url = 'http://' + url;
+		openURL(url);
+	}
+	else if (temp.protocol == "saturn:") {
 		if (temp.href == "saturn://about") {
 			openURL(`file://${path.join(__dirname, '..', 'views', 'about.html')}`);
-		} else {
+		} else if (temp.href == "saturn://game") {
 			openURL(`file://${path.join(__dirname, '..', 'views', 'run.html')}`);
+		} else {
+			openURL(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`);
 		}
 		
-	}
-	else if(temp.protocol == 'https:'){
+	} else if (temp.protocol == 'file:') {
+		openURL(`file://${path.join(url)}`);
+	} else if(temp.protocol == 'https:'){
 		console.log(temp);
 		let final_url = ipc.sendSync('find-route', url, temp);
 		if(final_url.error){
@@ -156,12 +226,16 @@ function openURL(url){
 	}else if(temp.protocol != 'http:' && temp.protocol != "localhost:" && temp.protocol != 'https:' && temp.protocol != 'https:' && temp.protocol != null && temp.protocol != 'file:'){
 		let generated_error_page = error_page({errorCode:-501, validatedURL:url});
 			webview.executeJavaScript(`document.body.innerHTML = '';document.write('${generated_error_page}')`);
-	}else{
-		// $('#' + currentTab.url_bar_id).val(url);
-		// console.log(url);
-		webview.loadURL(url);
-		// webview.loadURL($('#url').val());
-		console.log(webview.getURL());
+	} else {
+		var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+		var regex = new RegExp(expression);
+		if (url.match(regex)) {
+		  webview.loadURL(url);
+		} else {
+		  var search = url.replace(/http:\/\//g, '')
+		  search = search.replace(/https:\/\//g, '')
+		  webview.loadURL(u + '/?q=' + search);
+		}
 	}
 }
 
@@ -230,11 +304,54 @@ function updateUrlBar(tab){
 	}
 }
 
-webview.addEventListener('new-window', (e, contents) => {
-	const protocol = (new URL(e.url)).protocol
-    if (protocol === 'http:' || protocol === 'https:') {
-		newTab(e.url);
-    }
+webview.addEventListener("context-menu", (event) => {
+	var x = event.params.x;
+	var y = event.params.y;
+	var menu = document.querySelector('.menu');
+	function showMenu(x, y){
+		menu.style.left = x + 'px';
+		menu.style.top = y + 'px';
+		menu.classList.add('show-menu');
+	}
+	function hideMenu(){
+		menu.classList.remove('show-menu');
+	}
+	function onContextMenu(e){
+		e.preventDefault();
+		showMenu(event.params.x, event.params.y);
+		document.addEventListener('mousedown', onMouseDown, false);
+	}
+	function onMouseDown(e){
+		hideMenu();
+		document.removeEventListener('mousedown', onMouseDown);
+	}
+	onContextMenu(event);
+})
+
+function showMenu(x, y){
+	menu.style.left = x + 'px';
+	menu.style.top = y + 'px';
+	menu.classList.add('show-menu');
+}
+function hideMenu(){
+	menu.classList.remove('show-menu');
+}
+function onContextMenu(e){
+	e.preventDefault();
+	showMenu(e.params.x, e.params.y);
+	document.addEventListener('mousedown', onMouseDown, false);
+}
+function onMouseDown(e){
+	hideMenu();
+	document.removeEventListener('mousedown', onMouseDown);
+}
+
+ipc.on("context-menu", (event) => {
+	var x = event.params.x;
+	var y = event.params.y;
+	var menu = document.querySelector('.menu');
+	onContextMenu(event);
+	setTimeout(() => menu.classList.remove('show-menu'), 3000);
 })
 
 ipc.on('get-original-route', function (event, final_url) {
@@ -269,7 +386,7 @@ function initListeners(tab){
 		// $('#' + tab.url_bar_id).val(temp_webview.getURL());
     	console.log(tab, 'tab_url')
 		updateUrlBar(tab);
-		$('#' + tab.tab_click_id).text(tab.url);
+		$('#' + tab.tab_click_id).text(webview.getTitle());
 	});
 
 	temp_webview.addEventListener('did-fail-load', function(error){
@@ -337,42 +454,6 @@ $('body').on('click', function (e) {
     });
 });
 
-async function share_website(){
-	// console.log($($('.domain_name_field')[1]).val());
-	let domain_name = $($('.domain_name_field')[1]).val().toLowerCase();
-	console.log(domain_name);
-	if(isDomainValid(domain_name).error){
-		$($('.domain-error')[1]).html(isDomainValid(domain_name).msg);
-	}else{
-		// console.log(ipc.sendSync('-domain-available', domain_name));
-		if(ipc.sendSync('is-domain-available', domain_name)){
-			let url_for_tunnel = $('#' + currentTab.url_bar_id).val();
-			let parsed_url = url_module.parse(url_for_tunnel, true);
-			if((parsed_url.hostname.indexOf(".com") > -1) || (parsed_url.hostname.indexOf(".io") > -1)){
-				ipc.send('make-route', url_for_tunnel, domain_name);
-				$($('.domain-error')[1]).html(`Your website has been shared<br><a onclick = "openURL('https://${domain_name}')">https://${domain_name}</a>`);
-
-			}else{
-				console.log(parsed_url)
-				// console.log(parsed_url.port);
-				let port = parsed_url.port;
-				const url = await ngrok.connect(port == null ? 80 : port);
-
-        if(url) {
-          console.log(url, 'url');
-          ipc.send('make-route', url, domain_name);
-          // console.log(result);
-          $($('.domain-error')[1]).html(`Your website has been shared<br><a onclick = "openURL('https://${domain_name}')">https://${domain_name}</a>`);
-          // newTab(`ptp://${domain_name}`);
-        }
-			}
-		}else{
-			$($('.domain-error')[1]).html('Domain not available');
-			// console.log($('.domain-error'))
-		}
-	}
-}
-
 console.log("Vsevolod");
 // open dev tools
 function openDevTools(){
@@ -410,4 +491,16 @@ function openGame(){
 	console.log('open game');
 	console.log(`file://${path.join(__dirname, '..', 'views', 'run.html')}`);
 	newTab(`file://${path.join(__dirname, '..', 'views', 'run.html')}`);
+}
+function openSettings(){
+	console.log('open settings');
+	console.log(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`);
+	newTab(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`);
+}
+function toTab(num) {
+	if (num <= totalOpenedTab && num != 9) {
+		$('#tab_click' + num).click()
+	} else {
+		$('#tab_click' + totalOpenedTab).click()
+	}
 }

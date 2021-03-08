@@ -1,9 +1,9 @@
 {
   "name": "saturn",
   "productName": "Saturn",
-  "version": "1.0.1",
+  "version": "1.3.1",
   "description": "New mini and speedy browser",
-  "author": "vsevolod",
+  "author": "Vsevolod",
   "main": "src/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -13,10 +13,9 @@
   "dependencies": {
     "ajax-request": "^1.2.3",
     "dropbox-fs": "^0.3.1",
+    "electron-compile": "^6.4.4",
     "electron-updater": "^4.0.6",
-    "ngrok": "^3.2.7",
-    "mousetrap": "^1.6.2",
-    "electron-compile": "^6.4.4"
+    "mousetrap": "^1.6.2"
   },
   "devDependencies": {
     "electron-forge": "^5.2.4",
