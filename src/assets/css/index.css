@@ -143,7 +143,7 @@ textarea {
 
 .close {
 	float: right;
-	margin-right: 12px;
+	margin-right: 10px;
 	font-size:8px;
 	margin-top: 2px;
   position: relative;
@@ -202,14 +202,13 @@ textarea {
 	background: #eee;
 	background: -webkit-linear-gradient(to bottom, #fff 0%, #e5e5e5 100px, #e5e5e5 100%);
 	background: linear-gradient(to bottom, #fff 0%, #e5e5e5 100px, #e5e5e5 100%);
-	z-index: 100;
+	z-index: 999999;
 	border-radius: 3px;
 	box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
 	opacity: 0;
 	-webkit-transform: translate(0, 15px) scale(.95);
 	transform: translate(0, 15px) scale(.95);
 	transition: transform 0.1s ease-out, opacity 0.1s ease-out;
-	pointer-events: none;
 	display: none;
 }
 
@@ -316,5 +315,6 @@ textarea {
 	transition-delay: 300ms;
 }
 .show-menu {
-	display: block;
+	opacity: 1;
+	z-index: 9999999;
 }

@@ -144,7 +144,7 @@ module.exports = function (e) {
   var title = 'Этот сайт не удалось загрузить'
   var info = ''
   var icon = 'fa-exclamation-circle'
-  var button = '<a class="btn right" href="javascript:window.location.reload()">Попробовать снова</a>'
+  var button = '<a class="btn right" href="javascript:void(0)" onclick="window.location.reload()">Попробовать снова</a>'
   var errorDescription
   var moreHelp = ''
 

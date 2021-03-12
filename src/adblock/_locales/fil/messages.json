@@ -1,0 +1,98 @@
+{
+   "add": {
+      "message": "Magdagdag"
+   },
+   "block_element": {
+      "message": "Ihinto ang element"
+   },
+   "cancel": {
+      "message": "I-cancel"
+   },
+   "common_feature_anti_adblock_title": {
+      "message": "Itago ang mga babalang mensahe ng Adblock"
+   },
+   "common_feature_malware_title": {
+      "message": "Harangan ang Malware"
+   },
+   "common_feature_privacy_title": {
+      "message": "Harangan ang karagdagang pagsubaybay"
+   },
+   "continue": {
+      "message": "Magpatuloy"
+   },
+   "description": {
+      "description": "https://gitlab.com/eyeo/adblockplus/webstores/blob/d7acfa77af92c53bce1aa5e243bd81768e004e01/spec/chrome-web-store/listing-en_US.md#summary, Note: this cannot be longer than 132 characters",
+      "message": "Block YouTube™ ads, pop-ups & fight malware!"
+   },
+   "easy_create_filter": {
+      "message": "Ihinto ang element"
+   },
+   "filter_elemhideemulation_nodomain": {
+      "message": "Walang aktibong domain na tinukoy para sa extended element hiding filter"
+   },
+   "filter_invalid_domain": {
+      "message": "Imbalid (o walang laman) ang domain na tinukoy"
+   },
+   "line": {
+      "message": "Linya $number$: $message$",
+      "placeholders": {
+         "message": {
+            "content": "$2",
+            "example": "Some error on this line"
+         },
+         "number": {
+            "content": "$1",
+            "example": "42"
+         }
+      }
+   },
+   "name": {
+      "message": "Adblock Plus"
+   },
+   "name_devbuild": {
+      "message": "pagbuo ng Adblock Plus"
+   },
+   "name_releasebuild": {
+      "description": "Extension name to be shown for release builds. Note: this cannot be longer than 45 characters.",
+      "message": "Adblock Plus - free ad blocker"
+   },
+   "notification_configure": {
+      "message": "I-configure ang mga setting ng notification"
+   },
+   "notification_open_all": {
+      "message": "Buksan ang lahat ng mga link mula sa notification na ito"
+   },
+   "notification_without_buttons": {
+      "message": "Pindutin ang notification para mabuksan ang mga links."
+   },
+   "options_customFilter_cancel": {
+      "message": "I-cancel"
+   },
+   "options_filterList_column_name": {
+      "message": "Listahan ng mga Filter"
+   },
+   "options_filterList_title": {
+      "message": "Listahan ng mga Filter"
+   },
+   "options_filterList_updateNow": {
+      "message": "i-update ngayon"
+   },
+   "options_language_header": {
+      "message": "Lengwahe"
+   },
+   "options_short": {
+      "message": "Mga pagpipilian"
+   },
+   "options_tab_general": {
+      "message": "Pangkalahatan"
+   },
+   "stats_label_page": {
+      "message": "sa pahinang ito"
+   },
+   "stats_label_total": {
+      "message": "sa kabuuan"
+   },
+   "unexpected_filter_list_header": {
+      "message": "Hindi maaari ang Filter list headers dito"
+   }
+}

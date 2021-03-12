@@ -64,16 +64,22 @@
 			<a class="dropdown-item" onclick="openAbout()">About</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item" onclick="openSettings()">Settings</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" onclick="openHistory()">History</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item share-button" href="#" data-toggle="popover" data-placement="left" data-html="true" id="domain-form" >Find</a>
 			<!-- <a class="dropdown-item" href="#">Exit</a> -->
 		</div>
 
-		<div id = "popover-content-domain-form" class="hide">
+		<div id="popover-content-domain-form" class="hide">
 			<center>
-				<input type = "text" placeholder="Domain" class = "domain_name_field"><br>
-				<button class = "button" onclick="share_website()">Share</button><br>
-				<span class = "domain-error"></span>
+				<input type="text" placeholder="Text" class="search_field" id="searchText">
+				<button class="button" onclick="findText()">Find</button>
+				<button class="button" onclick="stopFind()">✖</button>
+				<span class="search-error"></span>
 			</center>
 		</div>
+
 		<menu class="menu">
 			<li class="menu-item" onclick="backCurrentTab()">
 				<button type="button" class="menu-btn">

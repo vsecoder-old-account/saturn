@@ -1,6 +1,5 @@
 const Mousetrap = require('mousetrap');
 
-
 Mousetrap.bind(['command+t', 'ctrl+t', 'command+n', 'ctrl+n'], function() {
 	newTab('https://google.com');
 });
@@ -13,7 +12,6 @@ Mousetrap.bind(['command+shift+i', 'ctrl+shift+i', 'command+shift+j', 'ctrl+shif
 Mousetrap.bind(['command+r', 'ctrl+r'], function() {
 	reloadCurrentTab();
 });
-
 Mousetrap.bind(['alt+1'], function() {
 	toTab(1);
 });
@@ -40,4 +38,7 @@ Mousetrap.bind(['alt+8'], function() {
 });
 Mousetrap.bind(['alt+9'], function() {
 	toTab(9);
+});
+Mousetrap.bind(['ctrl+f', 'command+f'], function() {
+	initPopover();
 });

@@ -148,18 +148,18 @@ li:last-child {
 			Saturn settings
 		</h1>
 		<h4>Theme:
-		<select onchange="getTheme(this.value)" id="th">
+		<select onchange="getTheme(this.value)">
 		  <option value="white">White</option>
 		  <option value="black">Black</option>
 		  <option disabled title="in development">Mono</option>
 		</select></h4> 
 		<h4>History:
-		<select>
+		<select onchange="getHistory(this.value)">
 		  <option value="no">Not save</option>
 		  <option value="yes">Save</option>
 		</select></h4>
 		<h4>Start page:
-		<select onchange="getPage(this.value)" id="pg">
+		<select onchange="getPage(this.value)">
 		  <option value="google">Google</option>
 		  <option value="yandex">Yandex</option>
 		  <option value="ya">Ya.ru</option>
@@ -178,6 +178,10 @@ li:last-child {
 		}
 		function getPage (num) {
 			localStorage.setItem('page', num);
+			console.log(num)
+		}
+		function getHistory (num) {
+			localStorage.setItem('history', num);
 			console.log(num)
 		}
 	</script>

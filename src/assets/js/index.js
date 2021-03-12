@@ -1,7 +1,21 @@
+//import { ElectronBlocker } from '@cliqz/adblocker-electron';
+
 const ipc = require('electron').ipcRenderer;
 const path = require('path');
 const url_module = require('url');
+const fs = require("fs");
+//const session = require('electron');
+//const blocker = ElectronBlocker.parse(fs.readFileSync('src/assets/js/easylist.txt', 'utf-8'));
+//blocker.enableBlockingInSession(session.defaultSession);
+
 var app = require('http').createServer();
+let history = localStorage.getItem('historyall');
+
+if (history == null) {
+	localStorage.setItem('historyall', '');
+	history = localStorage.getItem('historyall');
+}
+
 // error_page = require('./error_page.js');
 
 let totalOpenedTab = 0;
@@ -25,11 +39,11 @@ function opentab(tab){
 		webview = document.getElementById(currentTab.webview_id);
 }
 
-function newTab(url){
+function newTab(url, a){
 	console.log(url);
 	newTabCount++;
 	totalOpenedTab++;
-	$('<li id = "tab' + newTabCount + '" class = "nav-tab" onclick = "opentab(this)" data-tab_id = "tab' + newTabCount + '"><a href=""  role="tab" data-toggle="tab" data-target = "#tab_content' + newTabCount + '"><div class = "inline"><img class = "hide" id = "tab_loading' + newTabCount + '" src = "../assets/img/loading.gif" width = 15></img><img width=15 id = "tab_favicon'+ newTabCount +'"></img></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class = "inline tab-title-bar"><h id = "tab_click' + newTabCount + '"  data-tab_id = "tab' + newTabCount + '">New Tab</h></div>&nbsp;&nbsp;&nbsp;&nbsp;<span onclick = "closeAnyTab(this)" class="close black" data-tab_id = "tab' + newTabCount + '"> ✖</span></a></li>').insertBefore('#new-tab-button');
+	$('<li id = "tab' + newTabCount + '" class = "nav-tab" onclick = "opentab(this)" data-tab_id = "tab' + newTabCount + '"><a href=""  role="tab" data-toggle="tab" data-target = "#tab_content' + newTabCount + '"><div class = "inline"><img class = "hide" id = "tab_loading' + newTabCount + '" src = "../assets/img/loading.gif" width = 15></img><img width=15 id = "tab_favicon'+ newTabCount +'"></img></div>&nbsp;<div class = "inline tab-title-bar"><h id = "tab_click' + newTabCount + '"  data-tab_id = "tab' + newTabCount + '">New Tab</h></div>&nbsp;&nbsp;&nbsp;&nbsp;<span onclick = "closeAnyTab(this)" class="close black" data-tab_id = "tab' + newTabCount + '" id="cls' + newTabCount + '"> ✖</span></a></li>').insertBefore('#new-tab-button');
 	$('#browsers').append('<div class="tab-pane" id = "tab_content' + newTabCount + '">\
 						<div class = "url-bar-header">\
 							<div class = "url-bar-buttons">\
@@ -38,38 +52,52 @@ function newTab(url){
 							<button class="button url-bar-button" onclick = "reloadCurrentTab()"><i class="fas fa-redo-alt"></i></button>\
 							</div>\
 							<div class="url-bar-container">\
-								<input contenteditable id = "url_bar' + newTabCount + '" class = "url-bar" placeholder="Введите url или строку для поиска">\
+								<input contenteditable id = "url_bar' + newTabCount + '" autofocus class = "url-bar" placeholder="Введите url или строку для поиска">\
 							</div>\
 							<img src="../assets/img/abp-128.png" style="width: 20px">\
 							<div class = "inline url-bar-menu-button">\
 								<button class = "button url-bar-button menu-button" data-container="body" data-toggle="popover" data-placement="bottom" data-html = "true" id = "menu"><span class="mif-menu mif-2x"></span></button>\
 							</div>\
 						</div>\
-						<webview id="webview' + newTabCount + '" src="' + url + '" class="webview" webpreferences="javascript=yes, webviewtag=true" allowpopups disablewebsecurity></webview>\
+						<webview id="webview' + newTabCount + '" src="' + url + '" class="webview" webpreferences="javascript=yes, webviewtag=true" allowpopups disablewebsecurity plugins preload="../assets/js/preload.js"></webview>\
 					</div>');
 
 	tabs['tab' + newTabCount] = {
 		id: newTabCount,
-		favicon_id:'tab_favicon' + newTabCount,
+		favicon_id: 'tab_favicon' + newTabCount,
 		tab_loading_id: 'tab_loading' + newTabCount,
-		tab_id : 'tab' + newTabCount,
+		tab_id: 'tab' + newTabCount,
 		url_bar_id: 'url_bar' + newTabCount,
-		tab_click_id : 'tab_click' + newTabCount,
+		tab_click_id: 'tab_click' + newTabCount,
 		tab_content_id: 'tab_content' + newTabCount,
 		webview_id: 'webview' + newTabCount,
-    url,
-	}
-
-	initListeners(tabs['tab' + newTabCount]);
+		url
+	};
+	initListeners(tabs['tab' + newTabCount], a);
 	$('#' + tabs['tab' + newTabCount].tab_click_id).click();
 	initPopover();
 	decreaseTabSize();
+	document.querySelector('#' + 'url_bar' + newTabCount).focus();
 	webview.addEventListener('new-window', (e, contents) => {
 		const protocol = (new URL(e.url)).protocol
-	    if (protocol === 'http:' || protocol === 'https:') {
-			newTab(e.url);
-	    }
-	})
+		if (protocol === 'http:' || protocol === 'https:') {
+			newTab(e.url, false);
+		}
+	});
+	webview.addEventListener('found-in-page', function (e) {
+		console.log('Find');
+	});
+	webview.addEventListener('media-started-playing', function (e) {
+		console.log('🔊');
+		//$('#' + 'cls' + newTabCount).text(webview.getTitle() + '🔊 ✖');
+		document.querySelector('#' + 'cls' + newTabCount).innerHTML = '🔊 ✖';
+		//🔈 🔇 🔊
+	});
+	webview.addEventListener('media-paused', function (e) {
+		console.log('🔈');
+		//$('#' + 'cls' + newTabCount).text(webview.getTitle() + '🔈 ✖');
+		document.querySelector('#' + 'cls' + newTabCount).innerHTML = '🔈 ✖';
+	});
 }
 
 
@@ -109,21 +137,21 @@ let u = '';
 if (page == null) {
 	localStorage.setItem('page', 'google');
 	u = 'https://google.com';
-	newTab('https://google.com');
+	newTab('https://google.com', true);
 } else {
 	let pag = localStorage.getItem('page');
 	if (pag == 'yandex') {
 		u = 'https://yandex.ru';
-		newTab('https://yandex.ru');
+		newTab('https://yandex.ru', true);
 	} else if (pag == 'ya') {
 		u = 'https://ya.ru';
-		newTab('https://ya.ru');
+		newTab('https://ya.ru', true);
 	} else if (pag == 'duck') {
 		u = 'https://duckduckgo.com';
-		newTab('https://duckduckgo.com');
+		newTab('https://duckduckgo.com', true);
 	} else {
 		u = 'https://google.com';
-		newTab('https://google.com');
+		newTab('https://google.com', true);
 	}
 }
 
@@ -193,48 +221,59 @@ function closeAnyTab(tab){
 
 
 function openURL(url){
-  currentTab.url = url;
+    currentTab.url = url;
 
 	let temp = url_module.parse(url);
 	console.log(temp.protocol);
 	if (temp.protocol == null || temp.protocol == "localhost:") {
 		url = 'http://' + url;
-		openURL(url);
+		webview.loadURL(url);
+		localStorage.setItem('historyall', history + ' || ' + webview.getURL() + ' ! ' + webview.getTitle());
+		history = localStorage.getItem('historyall');
 	}
-	else if (temp.protocol == "saturn:") {
+	if (temp.protocol == "saturn:") {
 		if (temp.href == "saturn://about") {
-			openURL(`file://${path.join(__dirname, '..', 'views', 'about.html')}`);
+			webview.loadURL(`file://${path.join(__dirname, '..', 'views', 'about.html')}`);
+			$('#' + currentTab.url_bar_id).val(webview.getURL());
 		} else if (temp.href == "saturn://game") {
-			openURL(`file://${path.join(__dirname, '..', 'views', 'run.html')}`);
+			webview.loadURL(`file://${path.join(__dirname, '..', 'views', 'run.html')}`);
+			$('#' + currentTab.url_bar_id).val(webview.getURL());
+		} else if (temp.href == "saturn://history") {
+			webview.loadURL(`file://${path.join(__dirname, '..', 'views', 'history.html')}`);
+			$('#' + currentTab.url_bar_id).val(webview.getURL());
 		} else {
-			openURL(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`);
+			webview.loadURL(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`);
+			$('#' + currentTab.url_bar_id).val(webview.getURL());
 		}
-		
 	} else if (temp.protocol == 'file:') {
-		openURL(`file://${path.join(url)}`);
+		$('#' + currentTab.url_bar_id).val(path.join(url));
+		webview.loadURL(`file://${path.join(url)}`);
+		localStorage.setItem('historyall', history + ' || ' + webview.getURL() + ' ! ' + webview.getTitle());
+		history = localStorage.getItem('historyall');
 	} else if(temp.protocol == 'https:'){
-		console.log(temp);
-		let final_url = ipc.sendSync('find-route', url, temp);
-		if(final_url.error){
-			let generated_error_page = error_page({errorCode:-501, validatedURL:url});
-			webview.executeJavaScript(`document.body.innerHTML = '';document.write('${generated_error_page}')`);
-		}else{
-			console.log(final_url);
-			// $('#' + currentTab.url_bar_id).val(final_url.final_url);
-			webview.loadURL(final_url.final_url);
-		}
-	}else if(temp.protocol != 'http:' && temp.protocol != "localhost:" && temp.protocol != 'https:' && temp.protocol != 'https:' && temp.protocol != null && temp.protocol != 'file:'){
+		console.log(url);
+		$('#' + currentTab.url_bar_id).val(url);
+		webview.loadURL(url);
+		localStorage.setItem('historyall', history + ' || ' + webview.getURL() + ' ! ' + webview.getTitle());
+		history = localStorage.getItem('historyall');
+	} else if(temp.protocol != 'http:' && temp.protocol != "localhost:" && temp.protocol != 'https:' && temp.protocol != 'https:' && temp.protocol != null && temp.protocol != 'file:'){
 		let generated_error_page = error_page({errorCode:-501, validatedURL:url});
 			webview.executeJavaScript(`document.body.innerHTML = '';document.write('${generated_error_page}')`);
 	} else {
 		var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
 		var regex = new RegExp(expression);
 		if (url.match(regex)) {
+		  $('#' + currentTab.url_bar_id).val(url);
 		  webview.loadURL(url);
+		  localStorage.setItem('historyall', history + ' || ' + webview.getURL() + ' ! ' + webview.getTitle());
+		  history = localStorage.getItem('historyall');
 		} else {
 		  var search = url.replace(/http:\/\//g, '')
 		  search = search.replace(/https:\/\//g, '')
+		  $('#' + currentTab.url_bar_id).val(u + '/?q=' + search);
 		  webview.loadURL(u + '/?q=' + search);
+		  localStorage.setItem('historyall', history + webview.getTitle() + ' ! ' + webview.getURL() + ' || ');
+		  history = localStorage.getItem('historyall');
 		}
 	}
 }
@@ -281,7 +320,7 @@ function reloadCurrentTab(){
 	webview.reload();
 }
 
-function updateUrlBar(tab){
+function updateUrlBar(tab, a){
 	// console.log('loading');
 	let temp_webview = document.getElementById(tab.webview_id);
 	let url = url_module.parse(temp_webview.getURL(), true);
@@ -298,10 +337,27 @@ function updateUrlBar(tab){
 		$('#' + currentTab.url_bar_id).val('saturn://game');
 		return;
 	}
+
+	if(url.protocol == "file:" && path.basename(temp_url) == "history.html"){
+		$('#' + currentTab.url_bar_id).val('saturn://history');
+		return;
+	}
+
+	if(url.protocol == "file:" && path.basename(temp_url) == "settings.html"){
+		$('#' + currentTab.url_bar_id).val('saturn://settings');
+		return;
+	}
+
 		console.log(temp_url);
 	if(url.query.error == undefined){
 		ipc.send('find-original-route', temp_url, url);
 	}
+	if (a == false) {
+		$('#' + currentTab.url_bar_id).val(webview.getURL());
+	} else {
+		//
+	}
+	
 }
 
 webview.addEventListener("context-menu", (event) => {
@@ -379,13 +435,13 @@ ipc.on('get-original-route', function (event, final_url) {
 	}
 })
 
-function initListeners(tab){
+function initListeners(tab, a){
 	let temp_webview = document.getElementById(tab.webview_id);
 	temp_webview.addEventListener('did-finish-load', function(){
 	// temp_webview.openDevTools();
 		// $('#' + tab.url_bar_id).val(temp_webview.getURL());
     	console.log(tab, 'tab_url')
-		updateUrlBar(tab);
+		updateUrlBar(tab, a);
 		$('#' + tab.tab_click_id).text(webview.getTitle());
 	});
 
@@ -420,8 +476,6 @@ $('body').on('click', '.menu-button', function(e){
 
 function initPopover(){
 	$("[data-toggle=popover]").each(function(i, obj) {
-			// console.log(i,obj);
-
 		$(this).popover({
 		  html: true,
 		  content: function() {
@@ -430,15 +484,14 @@ function initPopover(){
 		    return $('#popover-content-' + id).html();
 		  }
 		});
-
 	});
 }
 
 // clear error messages on click domain field
 
-$('body').on('click', '.domain_name_field' ,function(){
+$('body').on('click', '.search_field', function(){
 	// console.log('Hello')
-	$($('.domain-error')[1]).html('');
+	//$($('.search-error')[1]).html('');
 })
 
 
@@ -460,17 +513,6 @@ function openDevTools(){
 	webview.openDevTools();
 }
 
-// check domain name is valid or not
-
-function isDomainValid(domain){
-	let domain_name = domain.trim();
-	if(!domain_name.endsWith('.com')) return {error:true, msg:'Add .com at the end'};
-	if(domain_name.startsWith('www.')) return {error:true, msg:'No need to include www.'};
-	if(domain_name.length < 7) return {error:true, msg:'Domain name should be more than 3 characters'};
-	return {error:false}
-
-}
-
 ipc.send('cleareUnavailableRoutes');
 
 ipc.on('unavailableRoutesCleared', function(event){
@@ -478,24 +520,47 @@ ipc.on('unavailableRoutesCleared', function(event){
 })
 
 ipc.on("webview-context-link", (event, data) => {
-	newTab(url);
+	newTab(url, false);
+	localStorage.setItem('historyall', history + webview.getTitle() + ' ! ' + url + ' || ');
+	history = localStorage.getItem('historyall');
 });
 
 function openAbout(){
 	console.log('open about');
 	console.log(`file://${path.join(__dirname, '..', 'views', 'about.html')}`);
-	newTab(`file://${path.join(__dirname, '..', 'views', 'about.html')}`);
+	newTab(`file://${path.join(__dirname, '..', 'views', 'about.html')}`, false);
 }
 
 function openGame(){
 	console.log('open game');
 	console.log(`file://${path.join(__dirname, '..', 'views', 'run.html')}`);
-	newTab(`file://${path.join(__dirname, '..', 'views', 'run.html')}`);
+	newTab(`file://${path.join(__dirname, '..', 'views', 'run.html')}`, false);
 }
 function openSettings(){
 	console.log('open settings');
 	console.log(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`);
-	newTab(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`);
+	newTab(`file://${path.join(__dirname, '..', 'views', 'settings.html')}`, false);
+}
+function openHistory() {
+	console.log('open game');
+	console.log(`file://${path.join(__dirname, '..', 'views', 'history.html')}`);
+	newTab(`file://${path.join(__dirname, '..', 'views', 'history.html')}`, false);
+}
+/////////////////////////
+let finderText = '';
+function findText(text) {
+	text = searchText[1].value
+	console.log(text)
+	if (finderText == text) {
+		webview.findInPage(text, [false, true]);
+	} else {
+		webview.findInPage(text);
+	}
+	finderText = text;
+	//webview.stopFindInPage();
+}
+function stopFind() {
+	webview.stopFindInPage('clearSelection');
 }
 function toTab(num) {
 	if (num <= totalOpenedTab && num != 9) {

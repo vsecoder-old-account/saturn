@@ -1,0 +1,217 @@
+{
+  "name_releasebuild": {
+    "message": "Adblock Plus - free ad blocker",
+    "description": "Extension name to be shown for release builds. Note: this cannot be longer than 45 characters."
+  },
+  "name": {
+    "message": "Adblock Plus"
+  },
+  "description": {
+    "message": "Ավելի քան 500 միլիոն բերբեռնումներով Adblock Plus- ը աշխարհի ամենատարածված գովազդային արգելափակողներից մեկն է."
+  },
+  "add": {
+    "message": "Ավելացնել"
+  },
+  "cancel": {
+    "message": "Չեղարկել"
+  },
+  "common_copyright": {
+    "message": "Հեղ. իրավունք © $year$ Բոլոր իրավունքները պաշտպանված են: Adblock Plus®-ը <a0>eyeo GmbH</a0>-ի գրանցված ապրանքանիշն է։",
+    "placeholders": {
+      "year": {
+        "content": "$1",
+        "example": "1984"
+      }
+    }
+  },
+  "common_feature_anti_adblock_title": {
+    "message": "Թաքցնել Adblock-ի Զգուշացումները"
+  },
+  "common_feature_circumvention_title": {
+    "message": "ABP Anti-Circumvention Ֆիլտրի Ցանկ"
+  },
+  "common_notification_hide": {
+    "message": "Փակել ծանուցումը"
+  },
+  "copy_selected": {
+    "message": "Պատճենել նշվածը"
+  },
+  "delete": {
+    "message": "Ջնջել"
+  },
+  "filter_action_failed": {
+    "message": "Ինչ-որ բան այն չէ։ Խնդրում ենք ավելի ուշ կրկին փորձել։"
+  },
+  "block_element": {
+    "message": "Արգելափակել Ելեմենտը"
+  },
+  "day1_blockelement_more": {
+    "message": "Իմանալ ինչպես"
+  },
+  "day1_community_contact": {
+    "message": "Հետադարձ կապ"
+  },
+  "options_close": {
+    "message": "փակել"
+  },
+  "options_customFilter_cancel": {
+    "message": "Չեղարկել"
+  },
+  "options_email": {
+    "message": "Էլ. փոստ՝"
+  },
+  "options_filterList_column_status": {
+    "message": "Վիճակը"
+  },
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Անհաջող."
+  },
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Անհաջող. Բեռնման սխալ"
+  },
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Անհաջող. Սխալ հասցե"
+  },
+  "options_language_header": {
+    "message": "Լեզու"
+  },
+  "options_page_document_title": {
+    "message": "Կարգավորել"
+  },
+  "options_page_title": {
+    "message": "Կարգավորել"
+  },
+  "filter_invalid_regexp": {
+    "message": "Սխալ կանոնավոր արտահայտություն"
+  },
+  "filter_unknown_option": {
+    "message": "Չճանաչված ֆիլտր"
+  },
+  "line": {
+    "message": "Տող $number$: $message$",
+    "placeholders": {
+      "message": {
+        "content": "$2",
+        "example": "Some error on this line"
+      },
+      "number": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "continue": {
+    "message": "Շարունակել"
+  },
+  "filters_subscription_lastDownload_connectionError": {
+    "message": "Բեռնման րնթացքում առաջացել են խնդիրներ"
+  },
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Անհայտ ֆիլտեր"
+  },
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Մենք չենք կարողանալու ետ գալ Ձեզ մոտ և զեկույցը ցածր կհամարենք:"
+  },
+  "issueReporter_commentPage_heading": {
+    "message": "Մեկնաբանել"
+  },
+  "issueReporter_comment_description": {
+    "message": "Տեքստային դաշտի ստորեւ թույլ է տալիս մուտքագրել մեկնաբանություն մեզ օգնելու համար՝ հասկանալ խնդիրը\" Այս քայլը պարտադիր չէ, սակայն խորհուրդ է տրվում, եթե Խնդիրը ակնհայտ չէ: Դուք կարող եք նաեւ վերանայել զեկույցի տվյալները մինչ դրա ուղարկումը:"
+  },
+  "issueReporter_comment_label": {
+    "message": "Մեկնաբանություն (պարտադիր չէ)՝"
+  },
+  "issueReporter_confirmationMessage": {
+    "message": "Ձեր զեկույցը պահպանվել է: Դուք կարող եք մուտք գործել այն հետեւյալ հասցեով՝"
+  },
+  "issueReporter_doneButton_label": {
+    "message": "Պատրաստ է"
+  },
+  "issueReporter_email_description": {
+    "message": "Խնդրում ենք գրե՛ք ճիշտ email հասցե՝ Ձեզ հետ կապնվելու համար և խնդիրը լուծելու համար:"
+  },
+  "issueReporter_email_label": {
+    "message": "Email՝"
+  },
+  "issueReporter_errorMessage": {
+    "message": "Զեկույցի ուղարկման փորձը ձախողվել է հետևյալ սխալի կոդով՝ \"?1?\": Ստուգեք միացումը ինտերնետին եւ կրկնեք: Եթե խնդիրը չկարգավորվի, խնդրում ենք դիմել [link]Adblock Plus Ֆորում[/link] աջակցության համար:"
+  },
+  "issueReporter_falseNegative_description": {
+    "message": "Ընտրեք այս տարբերակը, եթե գովազդը ցուցադրվում է, չնայած Adblock Plus միացված է:"
+  },
+  "issueReporter_falseNegative_label": {
+    "message": "Adblock Plus-ը չի փակում գովազդը"
+  },
+  "issueReporter_falsePositive_description": {
+    "message": "Ընտրեք այս տարբերակը, եթե այս էջում կորել է կարեւոր բովանդակություն, այն ցուցադրվում է սխալ կամ չի աշխատում: Դուք կարող եք որոշել, թե արդյոք Adblock Plus-ն է պատճառը ժամանակավորապես անջատելով այն:"
+  },
+  "issueReporter_falsePositive_label": {
+    "message": "Adblock Plus-ը շատ է արգելում"
+  },
+  "issueReporter_knownIssueMessage": {
+    "message": "Ձեր հաղորդած հարցը հնարավոր է արդեն հայտնի է: Լրացուցիչ տեղեկություններ՝"
+  },
+  "issueReporter_page_title": {
+    "message": "Տեղեկացնել"
+  },
+  "issueReporter_privacyPolicy": {
+    "message": "Անձնական տվյալների պահպանում"
+  },
+  "issueReporter_sendButton_label": {
+    "message": "Ուղարկել զեկույցը"
+  },
+  "issueReporter_sendPage_heading": {
+    "message": "Ուղարկել զեկույցը"
+  },
+  "issueReporter_sending": {
+    "message": "Խնդրում ենք սպասել, մինչ Adblock Plus-ը, ուղարկի Ձեր զեկույցը:"
+  },
+  "issueReporter_showData_label": {
+    "message": "Ցույց տալ զեկույցը"
+  },
+  "issueReporter_typeSelector_description": {
+    "message": "Այս պատուհանը օգնում է կատարել Adblock Plus-ի խնդրի մասին տեղակացնելու համար անհրաժեշտ քայլերն. Նախ ընտրեք այս էջում ձեր ունեցած խնդրի տեսակը"
+  },
+  "issueReporter_typeSelector_heading": {
+    "message": "Խնդրի ընտրում"
+  },
+  "notification_configure": {
+    "message": "Կարգավորել ծանուցման կայանքները"
+  },
+  "notification_open_all": {
+    "message": "Բացել բոլոր հղումները այս ծանուցումից"
+  },
+  "easy_create_filter": {
+    "message": "Արգելապակել Ելեմենտը"
+  },
+  "options_refresh": {
+    "message": "Թարմացնել"
+  },
+  "options_short": {
+    "message": "Կարգավորումներ"
+  },
+  "overlay_notification_closing_button_hide": {
+    "message": "Փակել"
+  },
+  "overlay_notification_closing_button_optout": {
+    "message": "Չցուցադրել ծանուցումներ"
+  },
+  "refresh_this_page": {
+    "message": "Թարմացնել էջը"
+  },
+  "share_on_facebook": {
+    "message": "Կիսվել Facebook-ում"
+  },
+  "share_on_twitter": {
+    "message": "Կիսվել Twitter-ում"
+  },
+  "status_domain": {
+    "message": "Տվյալ կայքում."
+  },
+  "status_header": {
+    "message": "Արգելափակել գովազդները"
+  },
+  "status_page": {
+    "message": "Տվյալ էջում."
+  }
+}
